@@ -20,6 +20,14 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+        constraints = [
+            # Constraints for the email field at database level
+            models.CheckConstraint(
+                condition=models.Q(email__regex=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
+                name='email_regex',
+                violation_error_message='Email must be in a valid format'
+            ),
+        ]
 
     def __str__(self):
         return str(self.id)
