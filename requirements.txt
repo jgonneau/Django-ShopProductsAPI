@@ -1,0 +1,17 @@
+asgiref==3.11.1
+cfgv==3.5.0
+distlib==0.4.0
+Django==6.0.2
+django-filter==25.2
+djangorestframework==3.16.1
+filelock==3.24.3
+identify==2.6.16
+Markdown==3.10.2
+nodeenv==1.10.0
+platformdirs==4.9.2
+pre_commit==4.5.1
+python-dotenv==1.2.1
+PyYAML==6.0.3
+sqlparse==0.5.5
+virtualenv==20.38.0
+python-semantic-release==10.1.1
