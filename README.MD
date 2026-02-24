@@ -25,7 +25,7 @@ as well as compliance with best practices.
 
    ```bash
    git clone <repository-url>
-   cd django-api-example
+   cd Django-ShopProductsAPI
    ```
 
 2. **Create environment file**
