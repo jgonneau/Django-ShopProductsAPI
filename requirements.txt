@@ -14,5 +14,5 @@ python-dotenv==1.2.1
 PyYAML==6.0.3
 sqlparse==0.5.5
 virtualenv==20.38.0
-python-semantic-release==10.1.1
+python-semantic-release==9.21.1
 psycopg[binary]==3.2.4
