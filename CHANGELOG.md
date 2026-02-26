@@ -1,6 +1,67 @@
 # CHANGELOG
 
 
+## v0.2.0 (2026-02-26)
+
+### Bug Fixes
+
+- Correcting version
+  ([`91bf7f2`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/91bf7f239d6c8420489f0d9c9d2048482650bd33))
+
+- Correcting version ([#10](https://github.com/jgonneau/Django-ShopProductsAPI/pull/10),
+  [`10df6b3`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/10df6b39004f83557f66616a88d1cb2016bdb1c8))
+
+fix required version
+
+### Chores
+
+- Add postgres dependancy to requirements.txt
+  ([`979b8a0`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/979b8a08aa44703148f1a900872d384f89c70489))
+
+- **readme**: Adjusting command
+  ([`f201379`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/f201379be8765e005bd3d4e9ca8dc1713c8c9e56))
+
+- **readme**: Adjusting command ([#12](https://github.com/jgonneau/Django-ShopProductsAPI/pull/12),
+  [`df1b738`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/df1b738321c1c1e02758b8e8dd044031bea8a75d))
+
+Adjusting clone command
+
+- **readme**: Writing description && onboarding commands
+  ([`1e5aa58`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/1e5aa58c6677e815b934c9412f28f233828dc0df))
+
+- **readme**: Writing description && onboarding commands
+  ([#11](https://github.com/jgonneau/Django-ShopProductsAPI/pull/11),
+  [`1e2ff7d`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/1e2ff7d449a89d4c175dc206f4b9808f88a8c8ba))
+
+Updating README.MD
+
+### Features
+
+- Adapt settings to postgres database
+  ([`b80776f`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/b80776f95bb780d5455691aacc32b08b85e2e86c))
+
+- Setting docker-compose for backend and database && configs
+  ([`8adce38`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/8adce3853b3c269c9c239c1b9fe3967bee65c3c8))
+
+- Setting docker-compose for backend and database && configs
+  ([#8](https://github.com/jgonneau/Django-ShopProductsAPI/pull/8),
+  [`55ec73d`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/55ec73d63093173c03cc3730cf651dfd150f5c0c))
+
+Add docker config
+
+### Testing
+
+- **user**: Add user model tests
+  ([`d245c7c`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/d245c7c2d62391453b4824597fae0ebd2e9ca330))
+
+- **user**: Add user model tests ([#7](https://github.com/jgonneau/Django-ShopProductsAPI/pull/7),
+  [`e965a32`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/e965a32966bb4b1aa67a56d755a7ce3aa270cdb6))
+
+Adding user model tests
+
+Benefits: ensure future unwanted modifications don't break the original definition
+
+
 ## v0.1.0 (2026-02-23)
 
 ### Chores
