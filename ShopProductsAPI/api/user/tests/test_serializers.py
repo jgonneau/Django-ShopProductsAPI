@@ -9,9 +9,14 @@ from ..serializers import (
     UserUpdateSerializer,
     ChangePasswordSerializer,
     UserDeleteSerializer,
+    AdminUserSerializer,
+    AdminUserCreateSerializer,
+    AdminUserUpdateSerializer,
+    AdminChangePasswordSerializer,
+    AdminUserDeleteSerializer,
 )
 
-
+# Tests for User serializers
 class UserSerializerTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
@@ -167,6 +172,7 @@ class ChangePasswordSerializerTestCase(TestCase):
         self.assertIn('new_password', serializer.errors)
 
 
+
 class UserDeleteSerializerTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
@@ -198,3 +204,169 @@ class UserDeleteSerializerTestCase(TestCase):
         )
         self.assertFalse(serializer.is_valid())
         self.assertIn('password', serializer.errors)
+
+
+# Tests for Admin user serializers
+
+class AdminUserSerializerTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='test@example.com',
+            password='testpass123',
+            username='testuser'
+        )
+
+    def test_serializer_contains_admin_fields(self):
+        serializer = AdminUserSerializer(instance=self.user)
+        expected_fields = {
+            'id', 'email', 'username', 'is_active', 'is_staff',
+            'is_superuser', 'token', 'created_at', 'updated_at'
+        }
+        self.assertEqual(set(serializer.data.keys()), expected_fields)
+
+    def test_read_only_fields(self):
+        serializer = AdminUserSerializer()
+        read_only_fields = serializer.Meta.read_only_fields
+        self.assertIn('id', read_only_fields)
+        self.assertIn('created_at', read_only_fields)
+        self.assertIn('updated_at', read_only_fields)
+
+class AdminUserCreateSerializerTestCase(TestCase):
+    def test_create_user_with_admin_fields(self):
+        data = {
+            'email': 'admin@example.com',
+            'username': 'adminuser',
+            'password': 'securepass123',
+            'is_staff': True,
+            'is_superuser': True,
+            'is_active': True
+        }
+        serializer = AdminUserCreateSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+        user = serializer.save()
+        self.assertTrue(user.is_staff)
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_active)
+
+    def test_no_password_confirm_required(self):
+        data = {
+            'email': 'admin@example.com',
+            'password': 'securepass123'
+        }
+        serializer = AdminUserCreateSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+
+class AdminUserUpdateSerializerTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='test@example.com',
+            password='testpass123',
+            username='testuser'
+        )
+
+    def test_update_admin_fields(self):
+        data = {
+            'email': 'newemail@example.com',
+            'username': 'newusername',
+            'is_active': False,
+            'is_staff': True,
+            'is_superuser': True,
+            'token': 'newtoken123'
+        }
+        serializer = AdminUserUpdateSerializer(instance=self.user, data=data, partial=True)
+        self.assertTrue(serializer.is_valid())
+        user = serializer.save()
+        self.assertEqual(user.email, 'newemail@example.com')
+        self.assertFalse(user.is_active)
+        self.assertTrue(user.is_staff)
+        self.assertEqual(user.token, 'newtoken123')
+
+    def test_allowed_fields(self):
+        serializer = AdminUserUpdateSerializer()
+        expected_fields = ['email', 'username', 'is_active', 'is_staff', 'is_superuser', 'token']
+        self.assertEqual(serializer.Meta.fields, expected_fields)
+
+class AdminChangePasswordSerializerTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='test@example.com',
+            password='oldpassword123'
+        )
+        self.factory = RequestFactory()
+
+    def _get_request_context(self):
+        request = self.factory.post('/fake-url/')
+        return {'request': request}
+
+    def test_change_password_for_user(self):
+        data = {
+            'user_id': str(self.user.id),
+            'new_password': 'newpassword123',
+            'new_password_confirm': 'newpassword123'
+        }
+        serializer = AdminChangePasswordSerializer(
+            data=data,
+            context=self._get_request_context()
+        )
+        self.assertTrue(serializer.is_valid())
+        serializer.save()
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('newpassword123'))
+
+    def test_user_not_found(self):
+        data = {
+            'user_id': str(uuid4()),
+            'new_password': 'newpassword123',
+            'new_password_confirm': 'newpassword123'
+        }
+        serializer = AdminChangePasswordSerializer(
+            data=data,
+            context=self._get_request_context()
+        )
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('user_id', serializer.errors)
+
+    def test_password_mismatch(self):
+        data = {
+            'user_id': str(self.user.id),
+            'new_password': 'newpassword123',
+            'new_password_confirm': 'differentpassword'
+        }
+        serializer = AdminChangePasswordSerializer(
+            data=data,
+            context=self._get_request_context()
+        )
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('new_password_confirm', serializer.errors)
+
+class AdminUserDeleteSerializerTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='test@example.com',
+            password='testpass123'
+        )
+        self.factory = RequestFactory()
+
+    def _get_request_context(self):
+        request = self.factory.post('/fake-url/')
+        return {'request': request}
+
+    def test_delete_user_by_id(self):
+        user_id = self.user.id
+        data = {'user_id': str(user_id)}
+        serializer = AdminUserDeleteSerializer(
+            data=data,
+            context=self._get_request_context()
+        )
+        self.assertTrue(serializer.is_valid())
+        serializer.save()
+        self.assertFalse(User.objects.filter(id=user_id).exists())
+
+    def test_user_not_found(self):
+        data = {'user_id': str(uuid4())}
+        serializer = AdminUserDeleteSerializer(
+            data=data,
+            context=self._get_request_context()
+        )
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('user_id', serializer.errors)
