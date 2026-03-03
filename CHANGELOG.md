@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.2 (2026-03-03)
+
+### Features
+
+- Adding api documentation views for developement and future sharing documentation
+  ([`12a5c4f`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/12a5c4f6e5fb1375b6a1707b758dbf5914df9193))
+
+
 ## v0.2.0-dev.1 (2026-03-03)
 
 ### Bug Fixes
