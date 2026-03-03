@@ -8,7 +8,6 @@ requires-python = ">=3.10"
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
 version_variables = ["ShopProductsAPI/shop_products_api/__init__.py:__version__"]
-branch = "main"
 upload_to_pypi = false
 upload_to_release = true
 build_command = ""
@@ -23,6 +22,11 @@ patch_tags = ["fix", "perf"]
 [tool.semantic_release.branches.main]
 match = "main"
 prerelease = false
+
+[tool.semantic_release.branches.dev]
+match = "dev"
+prerelease = true
+prerelease_token = "dev"
 
 [tool.semantic_release.changelog]
 template_dir = "templates"
