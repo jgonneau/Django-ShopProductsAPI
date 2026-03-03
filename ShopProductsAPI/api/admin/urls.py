@@ -1,6 +1,6 @@
 from django.urls import path
 
-from user.views import (
+from api.user.views import (
     AdminUserListView,
     AdminUserDetailView,
     AdminChangePasswordView,
@@ -9,8 +9,8 @@ from user.views import (
 
 urlpatterns = [
     # Admin user endpoints
-    path('users/', AdminUserListView.as_view(), name='admin-user-list'),
-    path('users/<uuid:id>/', AdminUserDetailView.as_view(), name='admin-user-detail'),
-    path('users/change-password/', AdminChangePasswordView.as_view(), name='admin-change-password'),
-    path('users/delete/', AdminUserDeleteView.as_view(), name='admin-user-delete'),
+    path('user/', AdminUserListView.as_view(), name='admin-user-list'),
+    path('user/<uuid:id>/', AdminUserDetailView.as_view(), name='admin-user-detail'),
+    path('user/change-password/', AdminChangePasswordView.as_view(), name='admin-change-password'),
+    path('user/delete/', AdminUserDeleteView.as_view(), name='admin-user-delete'),
 ]
