@@ -1,6 +1,47 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.4 (2026-03-29)
+
+### Features
+
+- Add migration for user field 'role'
+  ([`999711d`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/999711de42fe3cf44daa026eac73395c40027091))
+
+- Updating serializers
+  ([`181ec85`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/181ec85b354693e08f15a344dbab786a4f56aaaa))
+
+- Updating user model
+  ([`5a8bff4`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/5a8bff4c77c9f62d0c2fa922e60c3635dd97d340))
+
+### Testing
+
+- Add admin tests for user api endpoints
+  ([`a5f4d8a`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/a5f4d8a8659a134a8d881f3ef14cacbbe5f93730))
+
+- Add admin tests for user api endpoints
+  ([#25](https://github.com/jgonneau/Django-ShopProductsAPI/pull/25),
+  [`86d3c2a`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/86d3c2a1ff4a728a328f07d1389cd0100fb1f30c))
+
+Add tests :
+
+- List users - Get user detail - Changing user password - Deletion
+
+- Add tests for user api endpoints
+  ([`65deab1`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/65deab1855f6a143a3f06849d732cbf2bca20b28))
+
+- Add tests for user api endpoints
+  ([#24](https://github.com/jgonneau/Django-ShopProductsAPI/pull/24),
+  [`f2e7cd4`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/f2e7cd40e5242895fc1d63e20efee73957b1d565))
+
+Add tests :
+
+- Registration - Own user profile - Password - Deletion
+
+- Updating tests accordingly
+  ([`9c81f23`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/9c81f232d546f58a9664120517f5a638107548f4))
+
+
 ## v0.2.0-dev.3 (2026-03-29)
 
 ### Bug Fixes
