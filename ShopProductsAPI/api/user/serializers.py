@@ -7,8 +7,8 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        fields = ['id', 'email', 'username', 'role', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'role', 'created_at', 'updated_at']
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -86,7 +86,7 @@ class AdminUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'username', 'is_active', 'is_staff',
+            'id', 'email', 'username', 'role', 'is_active', 'is_staff',
             'is_superuser', 'token', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
@@ -97,7 +97,7 @@ class AdminUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'username', 'password',
+            'id', 'email', 'username', 'password', 'role',
             'is_active', 'is_staff', 'is_superuser'
         ]
         read_only_fields = ['id']
@@ -112,7 +112,7 @@ class AdminUserCreateSerializer(serializers.ModelSerializer):
 class AdminUserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'username', 'is_active', 'is_staff', 'is_superuser', 'token']
+        fields = ['email', 'username', 'role', 'is_active', 'is_staff', 'is_superuser', 'token']
 
 class AdminChangePasswordSerializer(serializers.Serializer):
     user_id = serializers.UUIDField()

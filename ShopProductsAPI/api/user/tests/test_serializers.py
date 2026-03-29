@@ -27,13 +27,14 @@ class UserSerializerTestCase(TestCase):
 
     def test_serializer_contains_expected_fields(self):
         serializer = UserSerializer(instance=self.user)
-        expected_fields = {'id', 'email', 'username', 'created_at', 'updated_at'}
+        expected_fields = {'id', 'email', 'username', 'role', 'created_at', 'updated_at'}
         self.assertEqual(set(serializer.data.keys()), expected_fields)
 
     def test_read_only_fields(self):
         serializer = UserSerializer()
         read_only_fields = serializer.Meta.read_only_fields
         self.assertIn('id', read_only_fields)
+        self.assertIn('role', read_only_fields)
         self.assertIn('created_at', read_only_fields)
         self.assertIn('updated_at', read_only_fields)
 
@@ -51,6 +52,7 @@ class UserCreateSerializerTestCase(TestCase):
         user = serializer.save()
         self.assertEqual(user.email, 'newuser@example.com')
         self.assertTrue(user.check_password('securepass123'))
+        self.assertEqual(user.role, 'guest')
 
     def test_password_mismatch_raises_error(self):
         data = {
@@ -219,7 +221,7 @@ class AdminUserSerializerTestCase(TestCase):
     def test_serializer_contains_admin_fields(self):
         serializer = AdminUserSerializer(instance=self.user)
         expected_fields = {
-            'id', 'email', 'username', 'is_active', 'is_staff',
+            'id', 'email', 'username', 'role', 'is_active', 'is_staff',
             'is_superuser', 'token', 'created_at', 'updated_at'
         }
         self.assertEqual(set(serializer.data.keys()), expected_fields)
@@ -237,6 +239,7 @@ class AdminUserCreateSerializerTestCase(TestCase):
             'email': 'admin@example.com',
             'username': 'adminuser',
             'password': 'securepass123',
+            'role': 'admin',
             'is_staff': True,
             'is_superuser': True,
             'is_active': True
@@ -244,6 +247,7 @@ class AdminUserCreateSerializerTestCase(TestCase):
         serializer = AdminUserCreateSerializer(data=data)
         self.assertTrue(serializer.is_valid())
         user = serializer.save()
+        self.assertEqual(user.role, 'admin')
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_active)
@@ -268,6 +272,7 @@ class AdminUserUpdateSerializerTestCase(TestCase):
         data = {
             'email': 'newemail@example.com',
             'username': 'newusername',
+            'role': 'vendor',
             'is_active': False,
             'is_staff': True,
             'is_superuser': True,
@@ -277,13 +282,14 @@ class AdminUserUpdateSerializerTestCase(TestCase):
         self.assertTrue(serializer.is_valid())
         user = serializer.save()
         self.assertEqual(user.email, 'newemail@example.com')
+        self.assertEqual(user.role, 'vendor')
         self.assertFalse(user.is_active)
         self.assertTrue(user.is_staff)
         self.assertEqual(user.token, 'newtoken123')
 
     def test_allowed_fields(self):
         serializer = AdminUserUpdateSerializer()
-        expected_fields = ['email', 'username', 'is_active', 'is_staff', 'is_superuser', 'token']
+        expected_fields = ['email', 'username', 'role', 'is_active', 'is_staff', 'is_superuser', 'token']
         self.assertEqual(serializer.Meta.fields, expected_fields)
 
 class AdminChangePasswordSerializerTestCase(TestCase):
