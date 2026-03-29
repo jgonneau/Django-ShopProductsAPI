@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'api.user',
+    'api.invoice',
+    'api.order',
+    'api.store',
+    'api.product',
+    'api.log',
 ]
 
 MIDDLEWARE = [
