@@ -1,6 +1,20 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.3 (2026-03-29)
+
+### Bug Fixes
+
+- Move from deprecated version to recommanded version
+  ([`7a8f160`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/7a8f160ffbdf97f3d84138b9e39e7f270626a478))
+
+- Move from deprecated version to recommanded version
+  ([#23](https://github.com/jgonneau/Django-ShopProductsAPI/pull/23),
+  [`ab22b22`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/ab22b226c0a989b9594fd9119e18e0ef1ba84673))
+
+Update to recommanded version
+
+
 ## v0.2.0-dev.2 (2026-03-03)
 
 ### Features
