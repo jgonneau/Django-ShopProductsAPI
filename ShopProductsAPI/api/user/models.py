@@ -3,14 +3,21 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 import uuid
 
+class Role(models.TextChoices):
+    ADMIN = 'admin', _('Admin')
+    VENDOR = 'vendor', _('Vendor')
+    CUSTOMER = 'customer', _('Customer')
+    GUEST = 'guest', _('Guest')
+
+
 # Create your models here.
 class User(AbstractUser):
-    pass
     
     id = models.UUIDField(_('id'), primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(_('username'), max_length=255, null=True, blank=True)
     email = models.EmailField(_('email address'), unique=True, null=False, blank=False)
     token = models.CharField(_('token'), max_length=255, null=True, blank=True)
+    role = models.CharField(_('role'), max_length=20, null=True, blank=True, choices=Role.choices, default=Role.GUEST)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
     
