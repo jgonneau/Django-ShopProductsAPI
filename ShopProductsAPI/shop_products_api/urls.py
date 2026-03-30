@@ -28,6 +28,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/admin/', include('api.admin.urls')),
     path('api/user/', include('api.user.urls')),
+    path('api/invoices/', include('api.invoice.urls')),
+    path('api/products/', include('api.product.urls')),
+    path('api/stores/', include('api.store.urls')),
+    path('api/orders/', include('api.order.urls')),
 
     # API Documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
