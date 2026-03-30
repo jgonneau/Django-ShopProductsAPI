@@ -10,6 +10,7 @@ as well as compliance with best practices.
 - Python 3.12
 - Django 6.0
 - Django REST Framework
+- drf-spectacular (OpenAPI/Swagger documentation)
 - PostgreSQL 16
 - Docker & Docker Compose
 
@@ -54,6 +55,8 @@ as well as compliance with best practices.
 
 6. **Access the application**
    - API: http://localhost:8000
+   - API Documentation (Swagger): http://localhost:8000/api/docs/
+   - API Documentation (ReDoc): http://localhost:8000/api/redoc/
    - Admin: http://localhost:8000/admin
 
 ## Useful Commands
@@ -112,13 +115,59 @@ docker compose exec db psql -U postgres -d shop_products -c "SELECT * FROM user_
 django-api-example/
 ├── ShopProductsAPI/
 │   ├── api/
-│   │   └── user/           # User app
+│   │   ├── admin/          # Admin-only API endpoints
+│   │   ├── invoice/        # Invoice management
+│   │   ├── log/            # System logging
+│   │   ├── order/          # Order management
+│   │   ├── product/        # Product catalog
+│   │   ├── store/          # Store management
+│   │   └── user/           # User authentication & management
 │   ├── shop_products_api/  # Project settings
 │   └── .env                # Environment variables
 ├── docker-compose.yml
 ├── Dockerfile
 └── requirements.txt
 ```
+
+## API Modules
+
+| Module    | Description                                           |
+| --------- | ----------------------------------------------------- |
+| `user`    | User registration, authentication, profile management |
+| `store`   | Store creation and management for vendors             |
+| `product` | Product catalog with stock management                 |
+| `order`   | Customer order processing and tracking                |
+| `invoice` | Invoice generation and payment status                 |
+| `log`     | System logging and audit trail (admin only)           |
+
+## API Endpoints
+
+### Public Endpoints
+
+- `POST /api/user/register/` - User registration
+- `GET /api/products/public/` - List available products
+- `GET /api/stores/public/` - List stores
+
+### Authenticated User Endpoints
+
+- `GET /api/user/me/` - Get current user profile
+- `PATCH /api/user/me/` - Update profile
+- `POST /api/user/change-password/` - Change password
+- `GET /api/orders/` - List user's orders
+- `POST /api/orders/` - Create new order
+- `GET /api/invoices/` - List user's invoices
+
+### Store Owner Endpoints
+
+- `GET /api/stores/` - List owned stores
+- `POST /api/stores/` - Create new store
+- `GET /api/products/` - List products in owned stores
+- `POST /api/products/store/<store_id>/` - Add product to store
+
+### Admin Endpoints (`/api/admin/`)
+
+- Full CRUD for users, stores, products, orders, invoices
+- Log management and statistics
 
 ## Environment Variables
 
