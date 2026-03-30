@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.6 (2026-03-30)
+
+### Features
+
+- Add new entities
+  ([`bd69b98`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/bd69b9870f37da275aa98a74ef87b95cef23a2ff))
+
+- Add new entities ([#32](https://github.com/jgonneau/Django-ShopProductsAPI/pull/32),
+  [`cbff23e`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/cbff23e4782f376ebbbcf107bd19d217628eabdc))
+
+Adding app modules && endpoint urls
+
+
 ## v0.2.0-dev.5 (2026-03-30)
 
 ### Features
