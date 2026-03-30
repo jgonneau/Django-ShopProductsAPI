@@ -1,6 +1,20 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.7 (2026-03-30)
+
+### Features
+
+- Update admin route endpoint urls with recent new app modules
+  ([`986f1c9`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/986f1c9704b169ef94802bed10eeea56887e4658))
+
+- Update admin route endpoint urls with recent new app modules
+  ([#33](https://github.com/jgonneau/Django-ShopProductsAPI/pull/33),
+  [`961dad1`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/961dad199ec46ccf2d1fed46dcfdfdce192387ac))
+
+Adding admin API endpoints
+
+
 ## v0.2.0-dev.6 (2026-03-30)
 
 ### Features
