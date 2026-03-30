@@ -1,6 +1,66 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.5 (2026-03-30)
+
+### Features
+
+- Add invoice module with models, serializers, views, urls && tests
+  ([`1fb0b23`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/1fb0b23edfe3c4638f81c91d4391fc5e87a0d1a1))
+
+- Add invoice module with models, serializers, views, urls && tests
+  ([#29](https://github.com/jgonneau/Django-ShopProductsAPI/pull/29),
+  [`0f54385`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/0f54385daac349e3fb6422f846526a7899d83439))
+
+Adding invoice module :
+
+- models - serializers - views - urls - tests
+
+- Add log module with models, serializers, views, urls && tests
+  ([`e0072a7`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/e0072a70c6f014a129e5da167bc9cfc4decefdd0))
+
+- Add log module with models, serializers, views, urls && tests
+  ([#31](https://github.com/jgonneau/Django-ShopProductsAPI/pull/31),
+  [`2c0bec1`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/2c0bec1644dac24563c90be7fd9a8dc268376077))
+
+Adding log module :
+
+- models - serializers - views - urls - tests
+
+- Add order module with models, serializers, views, urls && tests
+  ([`06a3619`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/06a36193ecf2d38d9d4b318d9b54ec39ee2fbf18))
+
+- Add order module with models, serializers, views, urls && tests
+  ([#30](https://github.com/jgonneau/Django-ShopProductsAPI/pull/30),
+  [`5f161df`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/5f161dfd7d785db9457bd2b5082613b7c9a60681))
+
+Adding order module :
+
+- models - serializers - views - urls - tests
+
+- Add product module with models, serializers, views, urls && tests
+  ([`0ee1338`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/0ee13384e75d6489877fe18c2a5ec486a7b65d29))
+
+- Add product module with models, serializers, views, urls && tests
+  ([#27](https://github.com/jgonneau/Django-ShopProductsAPI/pull/27),
+  [`4a97801`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/4a97801a864329732745440425f0d0491f00d3a3))
+
+Adding product module :
+
+- models - serializers - views - urls - tests
+
+- Add store module with models, serializers, views, urls && tests
+  ([`6932b4b`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/6932b4bd62c4cac056806d6472d1cf2e6a03f6d6))
+
+- Add store module with models, serializers, views, urls && tests
+  ([#28](https://github.com/jgonneau/Django-ShopProductsAPI/pull/28),
+  [`c436ce7`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/c436ce74239fb0dd2b55dc09f8d035e98ea9f874))
+
+Adding store module :
+
+- models - serializers - views - urls - tests
+
+
 ## v0.2.0-dev.4 (2026-03-29)
 
 ### Features
