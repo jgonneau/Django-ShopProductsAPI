@@ -17,3 +17,5 @@ virtualenv==20.38.0
 python-semantic-release==9.21.1
 psycopg[binary]==3.2.4
 drf-spectacular==0.28.0
+djangorestframework-simplejwt==5.4.0
+factory-boy==3.3.1
