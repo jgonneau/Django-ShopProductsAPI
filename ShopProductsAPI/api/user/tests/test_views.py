@@ -78,7 +78,7 @@ class UserMeViewTestCase(APITestCase):
     def test_get_profile_returns_expected_fields(self):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(self.url)
-        expected_fields = {'id', 'email', 'username', 'created_at', 'updated_at'}
+        expected_fields = {'id', 'email', 'username', 'role', 'created_at', 'updated_at'}
         self.assertEqual(set(response.data.keys()), expected_fields)
 
     def test_update_username_success(self):
@@ -186,7 +186,7 @@ class AdminUserListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_list_users_as_regular_user_returns_403(self):
         self.client.force_authenticate(user=self.regular_user)

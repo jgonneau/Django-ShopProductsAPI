@@ -29,6 +29,14 @@ class OrderListViewTestCase(APITestCase):
             name='Test Store',
             owner=self.store_owner
         )
+        self.product = Product.objects.create(
+            reference='PROD-001',
+            title='Test Product',
+            price=Decimal('99.99'),
+            stock_quantity=10,
+            activated=True,
+            store=self.store
+        )
         self.invoice = Invoice.objects.create(
             reference='INV-001',
             total=Decimal('99.99'),
@@ -49,7 +57,7 @@ class OrderListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_list_orders_as_regular_user_returns_403(self):
         self.client.force_authenticate(user=self.regular_user)
@@ -64,7 +72,7 @@ class OrderListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url, {'status': 'pending'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_create_order_as_admin(self):
         self.client.force_authenticate(user=self.admin_user)
@@ -80,7 +88,8 @@ class OrderListViewTestCase(APITestCase):
             'status': 'pending',
             'customer': str(self.regular_user.id),
             'store': str(self.store.id),
-            'invoice': str(invoice2.id)
+            'invoice': str(invoice2.id),
+            'products': [str(self.product.id)]
         }
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -249,13 +258,13 @@ class CustomerOrderListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.customer1)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'ORD-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'ORD-001')
 
     def test_cannot_see_other_customer_orders(self):
         self.client.force_authenticate(user=self.customer1)
         response = self.client.get(self.url)
-        references = [o['reference'] for o in response.data]
+        references = [o['reference'] for o in response.data['results']]
         self.assertNotIn('ORD-002', references)
 
     def test_unauthenticated_returns_401(self):
@@ -517,15 +526,15 @@ class StoreOrderListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.store_owner)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'ORD-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'ORD-001')
 
     def test_cannot_list_other_store_orders(self):
         other_url = reverse('store-order-list', kwargs={'store_id': self.store2.id})
         self.client.force_authenticate(user=self.store_owner)
         response = self.client.get(other_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(len(response.data['results']), 0)
 
 
 class StoreOrderStatusUpdateViewTestCase(APITestCase):

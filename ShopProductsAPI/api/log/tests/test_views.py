@@ -17,6 +17,9 @@ class LogListViewTestCase(APITestCase):
             email='user@example.com',
             password='userpass123'
         )
+        # Clear signal-generated logs by user creation
+        Log.objects.filter(source='api.user').delete()
+        #
         self.log1 = Log.objects.create(
             content={'message': 'Info log'},
             severity=Severity.INFO,
@@ -33,7 +36,7 @@ class LogListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_list_logs_as_regular_user_returns_403(self):
         self.client.force_authenticate(user=self.regular_user)
@@ -59,14 +62,14 @@ class LogListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url, {'severity': 'error'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['severity'], 'error')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['severity'], 'error')
 
     def test_filter_logs_by_source(self):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url, {'source': 'service_a'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
 
 class LogDetailViewTestCase(APITestCase):
@@ -170,6 +173,9 @@ class LogClearBySeverityViewTestCase(APITestCase):
             email='user@example.com',
             password='userpass123'
         )
+        # Clear signal-generated logs by user creation
+        Log.objects.filter(source='api.user').delete()
+        #
         Log.objects.create(content={'message': 'Debug 1'}, severity=Severity.DEBUG)
         Log.objects.create(content={'message': 'Debug 2'}, severity=Severity.DEBUG)
         Log.objects.create(content={'message': 'Info 1'}, severity=Severity.INFO)
@@ -209,6 +215,9 @@ class LogStatsViewTestCase(APITestCase):
             email='user@example.com',
             password='userpass123'
         )
+        # Clear signal-generated logs by user creation
+        Log.objects.filter(source='api.user').delete()
+        #
         Log.objects.create(
             content={'message': 'Log 1'},
             severity=Severity.INFO,

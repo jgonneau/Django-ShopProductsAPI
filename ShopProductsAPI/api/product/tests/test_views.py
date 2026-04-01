@@ -36,7 +36,7 @@ class ProductListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_list_products_as_regular_user_returns_403(self):
         self.client.force_authenticate(user=self.regular_user)
@@ -257,18 +257,18 @@ class PublicProductListViewTestCase(APITestCase):
     def test_list_public_products_unauthenticated(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'PROD-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'PROD-001')
 
     def test_only_activated_products_shown(self):
         response = self.client.get(self.url)
-        references = [p['reference'] for p in response.data]
+        references = [p['reference'] for p in response.data['results']]
         self.assertIn('PROD-001', references)
         self.assertNotIn('PROD-002', references)
 
     def test_public_products_dont_expose_stock_quantity(self):
         response = self.client.get(self.url)
-        self.assertNotIn('stock_quantity', response.data[0])
+        self.assertNotIn('stock_quantity', response.data['results'][0])
 
 
 class PublicProductDetailViewTestCase(APITestCase):
@@ -359,18 +359,18 @@ class StoreProductListViewTestCase(APITestCase):
     def test_list_store_products_unauthenticated(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'PROD-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'PROD-001')
 
     def test_only_store_products_shown(self):
         response = self.client.get(self.url)
-        references = [p['reference'] for p in response.data]
+        references = [p['reference'] for p in response.data['results']]
         self.assertIn('PROD-001', references)
         self.assertNotIn('PROD-002', references)
 
     def test_only_activated_products_shown(self):
         response = self.client.get(self.url)
-        references = [p['reference'] for p in response.data]
+        references = [p['reference'] for p in response.data['results']]
         self.assertNotIn('PROD-003', references)
 
 
@@ -412,13 +412,13 @@ class OwnerProductListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.owner1)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'PROD-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'PROD-001')
 
     def test_cannot_see_other_owner_products(self):
         self.client.force_authenticate(user=self.owner1)
         response = self.client.get(self.url)
-        references = [p['reference'] for p in response.data]
+        references = [p['reference'] for p in response.data['results']]
         self.assertNotIn('PROD-002', references)
 
     def test_create_own_product(self):
@@ -563,14 +563,14 @@ class OwnerStoreProductListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.owner1)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'PROD-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'PROD-001')
 
     def test_cannot_list_products_for_other_owner_store(self):
         self.client.force_authenticate(user=self.owner1)
         response = self.client.get(self.other_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(len(response.data['results']), 0)
 
     def test_create_product_for_own_store(self):
         self.client.force_authenticate(user=self.owner1)

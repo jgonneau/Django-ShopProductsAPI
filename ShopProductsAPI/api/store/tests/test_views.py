@@ -24,13 +24,13 @@ class StoreListViewTestCase(APITestCase):
             city='Test City',
             owner=self.admin_user
         )
-        self.url = reverse('store-list')
+        self.url = reverse('admin-store-list')
 
     def test_list_stores_as_admin(self):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_list_stores_as_regular_user_returns_403(self):
         self.client.force_authenticate(user=self.regular_user)
@@ -80,7 +80,7 @@ class StoreDetailViewTestCase(APITestCase):
             city='Test City',
             owner=self.admin_user
         )
-        self.url = reverse('store-detail', kwargs={'id': self.store.id})
+        self.url = reverse('admin-store-detail', kwargs={'id': self.store.id})
 
     def test_get_store_as_admin(self):
         self.client.force_authenticate(user=self.admin_user)
@@ -137,12 +137,13 @@ class PublicStoreListViewTestCase(APITestCase):
     def test_list_public_stores_unauthenticated(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_public_stores_dont_expose_owner(self):
         response = self.client.get(self.url)
-        self.assertNotIn('owner', response.data[0])
-        self.assertNotIn('owner_email', response.data[0])
+        first = response.data['results'][0]
+        self.assertNotIn('owner', first)
+        self.assertNotIn('owner_email', first)
 
 
 class PublicStoreDetailViewTestCase(APITestCase):
@@ -197,13 +198,13 @@ class OwnerStoreListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.owner1)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['name'], 'Owner1 Store')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['name'], 'Owner1 Store')
 
     def test_cannot_see_other_owner_stores(self):
         self.client.force_authenticate(user=self.owner1)
         response = self.client.get(self.url)
-        store_names = [s['name'] for s in response.data]
+        store_names = [s['name'] for s in response.data['results']]
         self.assertNotIn('Owner2 Store', store_names)
 
     def test_create_own_store(self):
