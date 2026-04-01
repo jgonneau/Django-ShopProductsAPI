@@ -17,6 +17,9 @@ class Log(models.Model):
     source = models.CharField(_('source'), max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
-    
+
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return str(self.id)

@@ -28,6 +28,7 @@ class LogListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
         fields = ['id', 'severity', 'source', 'created_at']
+        ordering = ['-created_at']
 
 
 class LogFilterSerializer(serializers.Serializer):
