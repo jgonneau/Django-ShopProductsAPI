@@ -42,7 +42,7 @@ class InvoiceListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_list_invoices_as_regular_user_returns_403(self):
         self.client.force_authenticate(user=self.regular_user)
@@ -245,13 +245,13 @@ class CustomerInvoiceListViewTestCase(APITestCase):
         self.client.force_authenticate(user=self.customer1)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['reference'], 'INV-001')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['reference'], 'INV-001')
 
     def test_cannot_see_other_customer_invoices(self):
         self.client.force_authenticate(user=self.customer1)
         response = self.client.get(self.url)
-        references = [inv['reference'] for inv in response.data]
+        references = [inv['reference'] for inv in response.data['results']]
         self.assertNotIn('INV-002', references)
 
     def test_list_invoices_unauthenticated_returns_401(self):

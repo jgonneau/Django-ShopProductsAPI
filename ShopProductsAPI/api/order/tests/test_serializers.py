@@ -325,6 +325,8 @@ class CustomerOrderCreateSerializerTestCase(TestCase):
             reference='PROD-001',
             title='Test Product',
             price=Decimal('99.99'),
+            stock_quantity=10,
+            activated=True,
             store=self.store
         )
         self.factory = RequestFactory()
