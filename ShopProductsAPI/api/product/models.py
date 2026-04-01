@@ -15,6 +15,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
 
+    class Meta:
+        ordering = ['title', 'price']
+
     @property
     def in_stock(self):
         return self.stock_quantity > 0

@@ -24,6 +24,9 @@ class Order(models.Model):
     delivery_date = models.DateField(_('delivery date'), null=True, blank=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
-    
+
+    class Meta:
+        ordering = ['-created_at', 'id']
+
     def __str__(self):
         return self.reference

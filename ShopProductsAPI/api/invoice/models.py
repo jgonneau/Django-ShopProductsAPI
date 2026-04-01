@@ -21,6 +21,9 @@ class Invoice(models.Model):
     store = models.ForeignKey('store.Store', on_delete=models.CASCADE, related_name='invoices')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
-    
+
+    class Meta:
+        ordering = ['-created_at', 'id']
+
     def __str__(self):
         return self.reference
