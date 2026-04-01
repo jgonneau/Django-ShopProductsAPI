@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.9 (2026-04-01)
+
+### Documentation
+
+- **readme**: Updating readme
+  ([`8a71b8a`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/8a71b8af0943a25fae59655226617dcd57c408c8))
+
+### Features
+
+- Adding authentication token routes
+  ([`8d3fb43`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/8d3fb43d5bbc6f24f1c9a89b2c4343c95017b345))
+
+- Adding UserManager to help user creation
+  ([`5d68799`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/5d68799dd3291d51930f105dfffda79f5fe22e9b))
+
+
 ## v0.2.0-dev.8 (2026-04-01)
 
 ### Chores
