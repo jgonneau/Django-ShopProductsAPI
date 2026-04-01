@@ -1,6 +1,31 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.8 (2026-04-01)
+
+### Chores
+
+- Cleaning some config file
+  ([`c6f334b`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/c6f334b67b10749baf2e084a384ea07ec05c322c))
+
+- **readme**: Updating readme.md with new added module
+  ([`46bcfe1`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/46bcfe18a27bfe3f9f3323954e7c5c0dc5392f41))
+
+- **readme**: Updating readme.md with new added module
+  ([#34](https://github.com/jgonneau/Django-ShopProductsAPI/pull/34),
+  [`d4ed52e`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/d4ed52ed3c06ee730860dfb4f1035fc83d7dd0b2))
+
+Udapting readme.md
+
+### Features
+
+- Update on project settings :
+  ([`860db03`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/860db0391434e853a5b5621b2ab67bedca91bfe0))
+
+- dev / prod separation settings - new implementation of rest_framework_simplejwt (access/refresh
+  token) - adding default pagination on API endpoints - allowed_host setting
+
+
 ## v0.2.0-dev.7 (2026-03-30)
 
 ### Features
