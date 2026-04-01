@@ -90,6 +90,7 @@ class AdminUserSerializer(serializers.ModelSerializer):
             'is_superuser', 'token', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
+        ordering = ['-created_at']
 
 class AdminUserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)

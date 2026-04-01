@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 import uuid
+
 
 class Role(models.TextChoices):
     ADMIN = 'admin', _('Admin')
@@ -10,9 +11,30 @@ class Role(models.TextChoices):
     GUEST = 'guest', _('Guest')
 
 
-# Create your models here.
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError(_('The Email field must be set'))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('role', Role.ADMIN)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError(_('Superuser must have is_staff=True.'))
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError(_('Superuser must have is_superuser=True.'))
+
+        return self.create_user(email, password, **extra_fields)
+
+
 class User(AbstractUser):
-    
     id = models.UUIDField(_('id'), primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(_('username'), max_length=255, null=True, blank=True)
     email = models.EmailField(_('email address'), unique=True, null=False, blank=False)
@@ -20,7 +42,9 @@ class User(AbstractUser):
     role = models.CharField(_('role'), max_length=20, null=True, blank=True, choices=Role.choices, default=Role.GUEST)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
-    
+
+    objects = UserManager()
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -35,6 +59,7 @@ class User(AbstractUser):
                 violation_error_message='Email must be in a valid format'
             ),
         ]
+        ordering = ['-created_at']
 
     def __str__(self):
         return str(self.id)
