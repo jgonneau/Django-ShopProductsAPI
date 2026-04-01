@@ -1,6 +1,48 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.10 (2026-04-01)
+
+### Features
+
+- Adding log for user deletion event
+  ([`de9ae67`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/de9ae67144dbbc990f896d270d5a3eeed2832cf4))
+
+- Adding signals in order to log events
+  ([`83e612e`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/83e612ef3bd7716c39ddc7621d4e1d3a31715356))
+
+### Refactoring
+
+- Ordering display list in log serializers
+  ([`5fb3c75`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/5fb3c753263a5f9f39e1100d5069cd857bc03f34))
+
+- Ordering display list of each model
+  ([`43e3963`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/43e39637b5e250c71267f12c863a99c7dd218d9f))
+
+- Ordering display list of each model
+  ([`c69bb86`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/c69bb86690ffa55488da88113ca71b91f7227a45))
+
+- Ordering display list of each model
+  ([`88cb9a0`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/88cb9a0fafd4a4d3fe66557e87c2709a5d31b9df))
+
+### Testing
+
+- Adding commands for seeding database with dummy data and factories
+  ([`a42176c`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/a42176c9f66cb7c2c12d8229fcad751b0f5cc744))
+
+- Adding some models factories for tests purposes
+  ([`466077a`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/466077a58a9a1a61cb484540dc8c410fd0ecff1f))
+
+- Updating tests with pagination now by default on api endpoints
+  ([`5cd206a`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/5cd206a9aabd220e8a9dcb8103cbf5ecbb708dbf))
+
+- Updating tests with pagination now by default on api endpoints
+  ([#37](https://github.com/jgonneau/Django-ShopProductsAPI/pull/37),
+  [`19b756d`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/19b756df2a860c62ad78f9fefa09315777148500))
+
+Refactoring tests to pagination setting
+
+
 ## v0.2.0-dev.9 (2026-04-01)
 
 ### Documentation
