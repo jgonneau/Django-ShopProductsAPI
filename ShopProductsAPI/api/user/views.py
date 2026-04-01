@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
+from api.log.models import Log, Severity
+
 from .models import User
 from .serializers import (
     UserSerializer,
@@ -113,5 +115,15 @@ class AdminUserDeleteView(APIView):
             context={'request': request}
         )
         serializer.is_valid(raise_exception=True)
+        deleted_user_id = str(serializer.user_to_delete.id)
         serializer.save()
+        Log.objects.create(
+            content={
+                'event': 'user_deleted_by_admin',
+                'user_id': deleted_user_id,
+                'admin_id': str(request.user.id),
+            },
+            severity=Severity.INFO,
+            source='api.admin'
+        )
         return Response(status=status.HTTP_204_NO_CONTENT)
