@@ -25,6 +25,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
 
+def set_true_if_env_is_true(name: str, default: bool) -> bool:
+    return os.getenv(name, str(default)).lower() in ('true', '1', 'yes', 'on')
+
+
+SECURE_SSL_REDIRECT = set_true_if_env_is_true('SECURE_SSL_REDIRECT', True)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -165,3 +171,10 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 }
+
+# JWT refresh cookie settings
+JWT_AUTH_REFRESH_COOKIE = os.getenv('JWT_AUTH_REFRESH_COOKIE', 'refresh_token')
+JWT_AUTH_REFRESH_COOKIE_PATH = os.getenv('JWT_AUTH_REFRESH_COOKIE_PATH', '/api/user/token/refresh/')
+JWT_AUTH_REFRESH_COOKIE_DOMAIN = os.getenv('JWT_AUTH_REFRESH_COOKIE_DOMAIN') or None
+JWT_AUTH_REFRESH_COOKIE_SAMESITE = os.getenv('JWT_AUTH_REFRESH_COOKIE_SAMESITE', 'Lax')
+JWT_AUTH_REFRESH_COOKIE_SECURE = set_true_if_env_is_true('JWT_AUTH_REFRESH_COOKIE_SECURE', False)

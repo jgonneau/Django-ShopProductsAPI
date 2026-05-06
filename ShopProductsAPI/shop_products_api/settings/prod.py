@@ -38,6 +38,9 @@ SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# Refresh cookie must be secure in production
+JWT_AUTH_REFRESH_COOKIE_SECURE = True
+
 # Static files
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # noqa: F405
 

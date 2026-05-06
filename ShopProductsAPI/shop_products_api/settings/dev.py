@@ -10,8 +10,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
-# Add JWT app
-INSTALLED_APPS += ['rest_framework_simplejwt']  # noqa: F405
+# Add JWT apps
+INSTALLED_APPS += ['rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist']  # noqa: F405
 
 # Development authentication classes (JWT + Basic + Session for browsable API)
 REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [  # noqa: F405
@@ -28,6 +28,9 @@ REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [  # noqa: F405
 
 # CORS settings for local development (if needed)
 # CORS_ALLOW_ALL_ORIGINS = True
+
+# Cookie settings for local HTTP development
+JWT_AUTH_REFRESH_COOKIE_SECURE = False
 
 # Debug toolbar settings (optional)
 # INSTALLED_APPS += ['debug_toolbar']
