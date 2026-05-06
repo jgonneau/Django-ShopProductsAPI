@@ -67,8 +67,9 @@ as well as compliance with best practices.
 
 - **Production** (`DJANGO_ENV=prod`): JWT only (no Basic/Session). Requires `rest_framework_simplejwt.token_blacklist` migrations—run `migrate` after switching to prod the first time.
 
-Obtain tokens with `POST /api/user/login/` using JSON body `{"email": "...", "password": "..."}`
-Refresh with `POST /api/user/token/refresh/` and verify with `POST /api/user/token/verify/`.
+Obtain tokens with `POST /api/user/login/` using JSON body `{"email": "...", "password": "..."}`.
+The response returns an access token and sets the refresh token in an `HttpOnly` cookie.
+Refresh with `POST /api/user/token/refresh/` (cookie-based) and verify with `POST /api/user/token/verify/`.
 
 ## Useful Commands
 
@@ -169,8 +170,9 @@ django-api-example/
 ### Public Endpoints
 
 - `POST /api/user/register/` — User registration
-- `POST /api/user/login/` — JWT access + refresh tokens (body: `email`, `password`)
-- `POST /api/user/token/refresh/` — New access token (body: `refresh`)
+- `POST /api/user/login/` — JWT access token + sets refresh token in `HttpOnly` cookie (body: `email`, `password`)
+- `POST /api/user/token/refresh/` — New access token using refresh cookie
+- `POST /api/user/logout/` — Clears refresh cookie and blacklists current refresh token
 - `POST /api/user/token/verify/` — Validate a token (body: `token`)
 - `GET /api/products/` — List available products
 - `GET /api/stores/` — List stores
