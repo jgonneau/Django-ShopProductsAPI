@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.11 (2026-05-06)
+
+### Chores
+
+- Update README.MD and .env.example according the recent change on HttpOnly cookie
+  ([`2b01d7e`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/2b01d7e0bb4d8e14f091f0357956472014cd4f43))
+
+### Features
+
+- **auth**: Harden JWT refresh by moving refresh token to HttpOnly cookie
+  ([`ccf1a98`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/ccf1a98ea685c0f6e5a070599cc1dbdf993544e4))
+
+### Testing
+
+- **auth**: Add test for HttpOnly cookie
+  ([`3152792`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/3152792dfcfda20f47f23082b230ec65273cec1d))
+
+
 ## v0.2.0-dev.10 (2026-04-01)
 
 ### Features
