@@ -1,9 +1,58 @@
 from django.urls import reverse
+from django.conf import settings
 from rest_framework.test import APITestCase
 from rest_framework import status
 from uuid import uuid4
 
 from ..models import User
+
+
+class JwtCookieAuthViewTestCase(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='jwt-user@example.com',
+            password='testpass123',
+        )
+        self.login_url = reverse('token-obtain-pair')
+        self.refresh_url = reverse('token-refresh')
+        self.logout_url = reverse('token-logout')
+        self.cookie_name = settings.JWT_AUTH_REFRESH_COOKIE
+
+    def test_login_sets_refresh_cookie_and_hides_refresh_in_body(self):
+        response = self.client.post(
+            self.login_url,
+            {'email': self.user.email, 'password': 'testpass123'},
+            format='json',
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('access', response.data)
+        self.assertNotIn('refresh', response.data)
+        self.assertIn(self.cookie_name, response.cookies)
+
+    def test_refresh_uses_cookie_when_body_refresh_not_provided(self):
+        self.client.post(
+            self.login_url,
+            {'email': self.user.email, 'password': 'testpass123'},
+            format='json',
+        )
+        response = self.client.post(self.refresh_url, {}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('access', response.data)
+        self.assertNotIn('refresh', response.data)
+
+    def test_logout_clears_refresh_cookie(self):
+        self.client.post(
+            self.login_url,
+            {'email': self.user.email, 'password': 'testpass123'},
+            format='json',
+        )
+        response = self.client.post(self.logout_url, {}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_205_RESET_CONTENT)
+        self.assertIn(self.cookie_name, response.cookies)
+        self.assertEqual(response.cookies[self.cookie_name].value, '')
 
 
 class UserRegisterViewTestCase(APITestCase):
