@@ -10,7 +10,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'description', 'price',
+            'id', 'reference', 'title', 'description', 'image', 'price',
             'stock_quantity', 'in_stock', 'store', 'store_name',
             'activated', 'created_at', 'updated_at'
         ]
@@ -21,7 +21,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'description', 'price',
+            'id', 'reference', 'title', 'description', 'image', 'price',
             'stock_quantity', 'store', 'activated'
         ]
         read_only_fields = ['id']
@@ -40,7 +40,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
 class ProductUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['title', 'description', 'price', 'stock_quantity', 'activated']
+        fields = ['title', 'description', 'image', 'price', 'stock_quantity', 'activated']
 
     def validate_price(self, value):
         if value is not None and value <= 0:
@@ -69,7 +69,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'price', 'stock_quantity',
+            'id', 'reference', 'title', 'image', 'price', 'stock_quantity',
             'in_stock', 'store', 'store_name', 'activated'
         ]
 
@@ -81,8 +81,8 @@ class PublicProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'description', 'price',
-            'in_stock', 'store_name'
+            'id', 'reference', 'title', 'description', 'image', 'price',
+            'in_stock', 'store', 'store_name'
         ]
 
 
@@ -93,7 +93,7 @@ class OwnerProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'description', 'price',
+            'id', 'reference', 'title', 'description', 'image', 'price',
             'stock_quantity', 'in_stock', 'store', 'store_name',
             'activated', 'created_at', 'updated_at'
         ]
@@ -104,7 +104,7 @@ class OwnerProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'description', 'price',
+            'id', 'reference', 'title', 'description', 'image', 'price',
             'stock_quantity', 'store', 'activated'
         ]
         read_only_fields = ['id']
@@ -129,7 +129,7 @@ class OwnerProductCreateSerializer(serializers.ModelSerializer):
 class OwnerProductUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['title', 'description', 'price', 'stock_quantity', 'activated']
+        fields = ['title', 'description', 'image', 'price', 'stock_quantity', 'activated']
 
     def validate_price(self, value):
         if value is not None and value <= 0:
@@ -149,6 +149,6 @@ class OwnerProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'reference', 'title', 'price', 'stock_quantity',
+            'id', 'reference', 'title', 'image', 'price', 'stock_quantity',
             'in_stock', 'store', 'store_name', 'activated'
         ]
