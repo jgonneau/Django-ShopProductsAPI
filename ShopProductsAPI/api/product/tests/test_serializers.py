@@ -37,7 +37,7 @@ class ProductSerializerTestCase(TestCase):
     def test_serializer_contains_expected_fields(self):
         serializer = ProductSerializer(instance=self.product)
         expected_fields = {
-            'id', 'reference', 'title', 'description', 'price',
+            'id', 'reference', 'title', 'description', 'image', 'price',
             'stock_quantity', 'in_stock', 'store', 'store_name',
             'activated', 'created_at', 'updated_at'
         }
@@ -82,6 +82,7 @@ class ProductCreateSerializerTestCase(TestCase):
             'reference': 'PROD-002',
             'title': 'New Product',
             'description': 'A new product',
+            'image': 'https://example.com/new-product.webp',
             'price': '49.99',
             'stock_quantity': 5,
             'store': self.store.id,
@@ -92,6 +93,7 @@ class ProductCreateSerializerTestCase(TestCase):
         product = serializer.save()
         self.assertEqual(product.reference, 'PROD-002')
         self.assertEqual(product.price, Decimal('49.99'))
+        self.assertEqual(product.image, 'https://example.com/new-product.webp')
 
     def test_create_product_without_description(self):
         data = {
@@ -223,7 +225,7 @@ class ProductUpdateSerializerTestCase(TestCase):
 
     def test_allowed_fields(self):
         serializer = ProductUpdateSerializer()
-        expected_fields = ['title', 'description', 'price', 'stock_quantity', 'activated']
+        expected_fields = ['title', 'description', 'image', 'price', 'stock_quantity', 'activated']
         self.assertEqual(serializer.Meta.fields, expected_fields)
 
 
@@ -293,7 +295,7 @@ class ProductListSerializerTestCase(TestCase):
     def test_serializer_contains_expected_fields(self):
         serializer = ProductListSerializer(instance=self.product)
         expected_fields = {
-            'id', 'reference', 'title', 'price', 'stock_quantity',
+            'id', 'reference', 'title', 'image', 'price', 'stock_quantity',
             'in_stock', 'store', 'store_name', 'activated'
         }
         self.assertEqual(set(serializer.data.keys()), expected_fields)
@@ -301,6 +303,7 @@ class ProductListSerializerTestCase(TestCase):
     def test_description_not_included(self):
         serializer = ProductListSerializer(instance=self.product)
         self.assertNotIn('description', serializer.data)
+        self.assertIn('image', serializer.data)
 
 
 class PublicProductSerializerTestCase(TestCase):
@@ -325,8 +328,8 @@ class PublicProductSerializerTestCase(TestCase):
     def test_serializer_contains_expected_fields(self):
         serializer = PublicProductSerializer(instance=self.product)
         expected_fields = {
-            'id', 'reference', 'title', 'description', 'price',
-            'in_stock', 'store_name'
+            'id', 'reference', 'title', 'description', 'image', 'price',
+            'in_stock', 'store', 'store_name'
         }
         self.assertEqual(set(serializer.data.keys()), expected_fields)
 
@@ -334,9 +337,9 @@ class PublicProductSerializerTestCase(TestCase):
         serializer = PublicProductSerializer(instance=self.product)
         self.assertNotIn('stock_quantity', serializer.data)
 
-    def test_store_id_not_exposed(self):
+    def test_store_id_is_exposed(self):
         serializer = PublicProductSerializer(instance=self.product)
-        self.assertNotIn('store', serializer.data)
+        self.assertEqual(serializer.data['store'], self.store.id)
 
     def test_activated_not_exposed(self):
         serializer = PublicProductSerializer(instance=self.product)

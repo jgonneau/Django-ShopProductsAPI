@@ -239,6 +239,7 @@ class PublicProductListViewTestCase(APITestCase):
         self.active_product = Product.objects.create(
             reference='PROD-001',
             title='Active Product',
+            image='https://example.com/active-product.webp',
             price=Decimal('99.99'),
             stock_quantity=10,
             store=self.store,
@@ -259,6 +260,11 @@ class PublicProductListViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data['results']), 1)
         self.assertEqual(response.data['results'][0]['reference'], 'PROD-001')
+        self.assertEqual(
+            response.data['results'][0]['image'],
+            'https://example.com/active-product.webp'
+        )
+        self.assertEqual(response.data['results'][0]['store'], self.store.id)
 
     def test_only_activated_products_shown(self):
         response = self.client.get(self.url)
@@ -285,6 +291,7 @@ class PublicProductDetailViewTestCase(APITestCase):
             reference='PROD-001',
             title='Active Product',
             description='An active product',
+            image='https://example.com/active-product-detail.webp',
             price=Decimal('99.99'),
             stock_quantity=10,
             store=self.store,
@@ -305,6 +312,8 @@ class PublicProductDetailViewTestCase(APITestCase):
         response = self.client.get(self.active_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['reference'], 'PROD-001')
+        self.assertEqual(response.data['image'], 'https://example.com/active-product-detail.webp')
+        self.assertEqual(response.data['store'], self.store.id)
 
     def test_get_inactive_product_returns_404(self):
         response = self.client.get(self.inactive_url)
