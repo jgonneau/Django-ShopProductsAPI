@@ -1,6 +1,31 @@
 # CHANGELOG
 
 
+## v0.2.0-dev.12 (2026-05-11)
+
+### Features
+
+- **product**: Add image field to product model && serializers update
+  ([`0df8956`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/0df89563c7bbe4263d25c56b95366e728f444c5f))
+
+- **product**: Add image field to product model && serializers update
+  ([#45](https://github.com/jgonneau/Django-ShopProductsAPI/pull/45),
+  [`6b415ee`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/6b415ee3c903809a70f09f2b398217301dde8700))
+
+Adding image field && updating serializer accordingly
+
+### Testing
+
+- **product**: Adding tests on models, serializers and views
+  ([#44](https://github.com/jgonneau/Django-ShopProductsAPI/pull/44),
+  [`4e25b0a`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/4e25b0a134e1a685b3fe6bea9f532607e2073088))
+
+Adding image field tests on model, serializers, views
+
+- **product**: Adding tests on models, serializers and views for the new image field
+  ([`9525449`](https://github.com/jgonneau/Django-ShopProductsAPI/commit/9525449a6bb2e02471ae022224cda22e811b189c))
+
+
 ## v0.2.0-dev.11 (2026-05-06)
 
 ### Chores
